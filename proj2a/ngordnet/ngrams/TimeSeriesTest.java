@@ -46,6 +46,35 @@ public class TimeSeriesTest {
 
     // Own tests
     @Test
+    public void testQuotient() {
+        TimeSeries a = new TimeSeries();
+        a.put(2000, 1.0);
+        a.put(2001, 2.0);
+        a.put(2002, 3.0);
+        a.put(2003, 4.0);
+
+        TimeSeries b = new TimeSeries();
+        b.put(2000, 5.0);
+        b.put(2001, 2.0);
+        b.put(2002, 6.0);
+        b.put(2003, 5.0);
+
+        TimeSeries quotient = a.dividedBy(b);
+
+        List<Integer> expectedYears = new ArrayList<>
+                (Arrays.asList(2000, 2001, 2002, 2003));
+
+        List<Double> expectedQuotient = new ArrayList<>
+                (Arrays.asList(0.2, 1.0, 0.5, 0.8));
+
+        assertThat(quotient.years()).isEqualTo(expectedYears);
+
+        for (int i = 0; i < expectedQuotient.size(); i++) {
+            assertThat(quotient.data().get(i)).isWithin(1E-10).of(expectedQuotient.get(i));
+        }
+    }
+
+    @Test
     public void testPlus() {
         // Try using the merge() method of TreeMap
         TimeSeries a = new TimeSeries();
@@ -60,10 +89,6 @@ public class TimeSeriesTest {
         b.put(2003, 4.0);
 
         TimeSeries sum = a.plus(b);
-        // expected: 2000, 1.0
-        //           2001, 4.0
-        //           2002, 6.0
-        //           2003, 8.0
 
         List<Integer> expectedYears = new ArrayList<>
                 (Arrays.asList(2000, 2001, 2002, 2003));
@@ -76,7 +101,6 @@ public class TimeSeriesTest {
         for (int i = 0; i < expectedSum.size(); i++) {
             assertThat(sum.data().get(i)).isWithin(1E-10).of(expectedSum.get(i));
         }
-
     }
 
     @Test

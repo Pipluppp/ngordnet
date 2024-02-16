@@ -105,7 +105,20 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries resultQuotient = new TimeSeries();
+
+        for (Map.Entry<Integer, Double> entry : entrySet()) {
+            Integer year = entry.getKey();
+            Double value = entry.getValue();
+
+            if (!ts.containsKey(year)) {
+                throw new IllegalArgumentException("Input TimeSeries object lacks a key-value mapping");
+            }
+
+            resultQuotient.compute(year, (v1, v2) -> value / ts.get(year));
+        }
+
+        return resultQuotient;
     }
 
     // TODO: Add any private helper methods.

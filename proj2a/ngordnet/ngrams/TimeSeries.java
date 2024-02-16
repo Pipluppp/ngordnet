@@ -29,7 +29,23 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+
+        // I think no need to check if it goes beyond bounds, trivially empty if invalid
+        // if (startYear < MIN_YEAR || startYear > MAX_YEAR || endYear < MIN_YEAR || endYear > MAX_YEAR) { return; }
+
+        if (startYear > endYear) { return; }
+
+        List<Integer> years = ts.years();
+        List<Double> data = ts.data();
+
+        for (int i = 0, size = ts.size(); i < size; i++) {
+            Integer year = years.get(i);
+            Double datapoint = data.get(i);
+
+            if (year >= startYear && year <= endYear) {
+                put(year, datapoint);
+            }
+        }
     }
 
     /**

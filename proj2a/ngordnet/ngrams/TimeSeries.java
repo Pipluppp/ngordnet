@@ -1,6 +1,7 @@
 package ngordnet.ngrams;
 
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
 
@@ -74,7 +75,23 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries resultSum = new TimeSeries();
+
+        // Merge adds the given key-value mapping, if mapping exists then plus the value
+        for (Map.Entry<Integer, Double> entry : entrySet()) {
+            Integer year = entry.getKey();
+            Double value = entry.getValue();
+
+            resultSum.merge(year, value, (v1, v2) -> value + resultSum.get(year));
+        }
+
+        for (Map.Entry<Integer, Double> entry : ts.entrySet()) {
+            Integer year = entry.getKey();
+            Double value = entry.getValue();
+
+            resultSum.merge(year, value, (v1, v2) -> value + resultSum.get(year));
+        }
+        return resultSum;
     }
 
     /**

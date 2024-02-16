@@ -41,4 +41,25 @@ public class TimeSeriesTest {
             assertThat(totalPopulation.data().get(i)).isWithin(1E-10).of(expectedTotal.get(i));
         }
     }
+
+    @Test
+    public void testYearsData() {
+        TimeSeries familyBirthdays = new TimeSeries();
+        familyBirthdays.put(1997, 2.0);
+        familyBirthdays.put(1995, 1.0);
+        familyBirthdays.put(2003, 3.0);
+        familyBirthdays.put(1987, 0.0);
+
+        List<Integer> expectedYears = new ArrayList<>
+                (Arrays.asList(1987, 1995, 1997, 2003));
+
+        List<Double> expectedData = new ArrayList<>
+                (Arrays.asList(0.0, 1.0, 2.0, 3.0));
+
+        assertThat(familyBirthdays.years()).isEqualTo(expectedYears);
+
+        for (int i = 0; i < familyBirthdays.size(); i++) {
+            assertThat(familyBirthdays.data().get(i)).isWithin(1E-10).of(expectedData.get(i));
+        }
+    }
 } 

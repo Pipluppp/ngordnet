@@ -2,6 +2,7 @@ package ngordnet.ngrams;
 
 import java.util.List;
 import java.util.TreeMap;
+import java.util.ArrayList;
 
 /**
  * An object for mapping a year number (e.g. 1996) to numerical data. Provides
@@ -35,8 +36,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Returns all years for this TimeSeries (in any order).
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
-        return null;
+        return new ArrayList<Integer>(keySet());
     }
 
     /**
@@ -44,8 +44,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Must be in the same order as years().
      */
     public List<Double> data() {
-        // TODO: Fill in this method.
-        return null;
+        return new ArrayList<Double>(values());
     }
 
     /**

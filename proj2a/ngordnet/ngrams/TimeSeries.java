@@ -1,5 +1,6 @@
 package ngordnet.ngrams;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,6 +23,11 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries() {
         super();
+    }
+
+    /** Creates TimeSeries with initial mapping (i, d) */
+    public TimeSeries(Integer i, Double d) {
+        put(i, d);
     }
 
     /**

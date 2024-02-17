@@ -1,10 +1,13 @@
 package ngordnet.main;
 
 import ngordnet.browser.NgordnetServer;
+import ngordnet.ngrams.NGramMap;
 
 public class Main {
     public static void main(String[] args) {
         NgordnetServer hns = new NgordnetServer();
+        NGramMap ngm = new NGramMap("./data/ngrams/top_14377_words.csv",
+                "./data/ngrams/total_counts.csv");
 
         /* The following code might be useful to you.
 
@@ -16,6 +19,6 @@ public class Main {
 
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());
-        hns.register("historytext", new DummyHistoryTextHandler());
+        hns.register("historytext", new HistoryTextHandler(ngm));
     }
 }

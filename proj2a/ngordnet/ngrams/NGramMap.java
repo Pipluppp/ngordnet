@@ -98,13 +98,7 @@ public class NGramMap {
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
         TimeSeries wh = new TimeSeries(words.get(word), startYear, endYear);
-
-        for (Integer year: wh.keySet()) {
-            Double totalYearCount = corpus.get(year);
-            Double count = wh.get(year);
-            wh.compute(year, (v1, v2) -> count / totalYearCount);
-        }
-        return wh;
+        return wh.dividedBy(corpus);
     }
 
     /**

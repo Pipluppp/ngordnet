@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * An object that provides utility methods for making queries on the
@@ -88,7 +89,6 @@ public class NGramMap {
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
         return new TimeSeries(corpus, MIN_YEAR, MAX_YEAR);
     }
 
@@ -97,8 +97,14 @@ public class NGramMap {
      * and ENDYEAR, inclusive of both ends.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wh = new TimeSeries(words.get(word), startYear, endYear);
+
+        for (Integer year: wh.keySet()) {
+            Double totalYearCount = corpus.get(year);
+            Double count = wh.get(year);
+            wh.compute(year, (v1, v2) -> count / totalYearCount);
+        }
+        return wh;
     }
 
     /**
@@ -107,8 +113,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return weightHistory(word, MIN_YEAR, MAX_YEAR);
     }
 
     /**

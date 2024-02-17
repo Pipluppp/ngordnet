@@ -110,4 +110,16 @@ public class NGramMapTest {
             assertThat(tch.get(year)).isEqualTo(expectedCount);
         }
     }
+
+    @Test
+    public void testWeightHistory() {
+        NGramMap ngm = new NGramMap("./data/ngrams/top_14377_words.csv",
+                "./data/ngrams/total_counts.csv");
+        // returns the relative weight of the word fish in each year between 1850 and 1933.
+        TimeSeries fishWeight = ngm.weightHistory("fish", 1850, 1933);
+        assertThat(fishWeight.get(1865)).isWithin(1E-7).of(136497.0/2563919231.0);
+
+        fishWeight = ngm.weightHistory("fish");
+        assertThat(fishWeight.get(1865)).isWithin(1E-7).of(136497.0/2563919231.0);
+    }
 }  

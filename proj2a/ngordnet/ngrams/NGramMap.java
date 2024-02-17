@@ -29,17 +29,18 @@ public class NGramMap {
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
     public NGramMap(String wordsFilename, String countsFilename) {
-        // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
-
         // Read in words count
-        In inWords = new In("./data/ngrams/very_short.csv");
+        In inWords = new In(wordsFilename);
         while (inWords.hasNextLine()) {
+            if (inWords.isEmpty()) {
+                break;
+            }
+
             String word = inWords.readString();
             int year = inWords.readInt();
             double count = inWords.readDouble();
             inWords.readInt();
 
-            TimeSeries ts = new TimeSeries();
             if (words.containsKey(word)) {
                 words.get(word).put(year, count);
             }
@@ -49,16 +50,18 @@ public class NGramMap {
         }
 
         // Read in corpus count
-        In inCorpus = new In("./data/ngrams/total_counts.csv");
+        In inCorpus = new In(countsFilename);
         while (inCorpus.hasNextLine()) {
+            if (inCorpus.isEmpty()) {
+                break;
+            }
+
             String[] line = inCorpus.readString().split(",");
 
             int year = Integer.parseInt(line[0]);
             double count = Double.parseDouble(line[1]);
             corpus.put(year, count);
         }
-
-
     }
 
     /**

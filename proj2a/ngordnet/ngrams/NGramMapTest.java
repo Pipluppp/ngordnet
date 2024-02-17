@@ -1,10 +1,9 @@
 package ngordnet.ngrams;
 
+import edu.princeton.cs.algs4.In;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -73,14 +72,31 @@ public class NGramMapTest {
 
     // Own tests
     @Test
-    public void testRead() {
+    public void testReadSmall() {
         NGramMap ngm = new NGramMap("./data/ngrams/very_short.csv", "./data/ngrams/total_counts.csv");
-        List<Integer> expectedYears = new ArrayList<>
-                (Arrays.asList(2005, 2006, 2007, 2008));
-        List<Double> expectedCounts = new ArrayList<>
-                (Arrays.asList(646179.0, 677820.0, 697645.0, 795265.0));
 
-        System.out.println(ngm.corpus);
-        System.out.println(ngm.words);
+        System.out.println(ngm.corpus.keySet());
+        assertThat(ngm.corpus.size()).isEqualTo(529);
+
+        HashSet<String> expectedWords = new HashSet<>();
+        expectedWords.add("airport");
+        expectedWords.add("request");
+        expectedWords.add("wandered");
+
+        System.out.println(ngm.words.keySet());
+        assertThat(ngm.words.keySet()).isEqualTo(expectedWords);
+    }
+
+    @Test
+    public void testReadLarge() {
+        NGramMap ngm = new NGramMap("./data/ngrams/top_14377_words.csv", "./data/ngrams/total_counts.csv");
+
+        int expectedMappingCount =  5617295;
+        int mappings = 0;
+        for (Map.Entry<String, TimeSeries> entry: ngm.words.entrySet()) {
+            mappings += entry.getValue().size();
+        }
+
+        assertThat(mappings).isEqualTo(expectedMappingCount);
     }
 }  

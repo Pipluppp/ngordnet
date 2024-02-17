@@ -99,4 +99,15 @@ public class NGramMapTest {
 
         assertThat(mappings).isEqualTo(expectedMappingCount);
     }
+
+    @Test
+    public void testTotalCountHistory() {
+        NGramMap ngm = new NGramMap("./data/ngrams/very_short.csv", "./data/ngrams/total_counts.csv");
+        TimeSeries tch = ngm.totalCountHistory();
+
+        for (Integer year: ngm.corpus.keySet()) {
+            Double expectedCount = ngm.corpus.get(year);
+            assertThat(tch.get(year)).isEqualTo(expectedCount);
+        }
+    }
 }  

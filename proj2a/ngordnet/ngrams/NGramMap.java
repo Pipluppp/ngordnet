@@ -71,8 +71,7 @@ public class NGramMap {
      * NGramMap. This is also known as a "defensive copy".
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(words.get(word), startYear, endYear);
     }
 
     /**
@@ -82,8 +81,7 @@ public class NGramMap {
      * NGramMap. This is also known as a "defensive copy".
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(words.get(word), MIN_YEAR, MAX_YEAR);
     }
 
     /**
@@ -91,7 +89,7 @@ public class NGramMap {
      */
     public TimeSeries totalCountHistory() {
         // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(corpus, MIN_YEAR, MAX_YEAR);
     }
 
     /**

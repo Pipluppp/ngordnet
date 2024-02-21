@@ -63,7 +63,7 @@ public class Graph {
     }
 
     // Given a word, find its hyponyms (sorted)
-    public List hyponyms(String word) {
+    public HashSet<String> hyponyms(String word) {
         HashSet<Synset> synsetsToTraverse = new HashSet<>();
         HashSet<String> setOfHyponyms = new HashSet<>();
 
@@ -78,9 +78,11 @@ public class Graph {
         for (Synset x: synsetsToTraverse) {
             traverse(x, setOfHyponyms);
         }
+        return setOfHyponyms;
+    }
 
-        // Sort the set
-        List sorted = new ArrayList(setOfHyponyms);
+    public List<String> sortHyponyms(HashSet<String> hyponyms) {
+        List<String> sorted = new ArrayList<>(hyponyms);
         Collections.sort(sorted);
         return sorted;
     }

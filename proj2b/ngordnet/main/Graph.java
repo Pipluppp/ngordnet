@@ -61,4 +61,35 @@ public class Graph {
             System.out.println();
         }
     }
+
+    // Given a word, find its hyponyms (sorted)
+    public List hyponyms(String word) {
+        HashSet<Synset> synsetsToTraverse = new HashSet<>();
+        HashSet<String> setOfHyponyms = new HashSet<>();
+
+        // Identify synsets containing the word
+        for (Synset x: synsets) {
+            if (x.words.contains(word)) {
+                synsetsToTraverse.add(x);
+            }
+        }
+
+        // Traverse synsets
+        for (Synset x: synsetsToTraverse) {
+            traverse(x, setOfHyponyms);
+        }
+
+        // Sort the set
+        List sorted = new ArrayList(setOfHyponyms);
+        Collections.sort(sorted);
+        return sorted;
+    }
+
+    public void traverse(Synset node, HashSet<String> allHyponyms) {
+        allHyponyms.addAll(node.words);
+
+        for (Synset x: node.children) {
+            traverse(x, allHyponyms);
+        }
+    }
 }

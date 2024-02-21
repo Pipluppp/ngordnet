@@ -9,8 +9,8 @@ public class Graph {
     // Node class
     public static class Synset {
         public Integer id;
-        public HashSet<String> words = new HashSet<>();
-        public HashSet<Synset> children = new HashSet<>();
+        public ArrayList<String> words = new ArrayList<>();
+        public ArrayList<Synset> children = new ArrayList<>();
 
         public Synset(Integer id, String synsetWords) {
             this.id = id;
@@ -18,23 +18,47 @@ public class Graph {
         }
     }
 
-    HashSet<Synset> synsets = new HashSet<>();
+    ArrayList<Synset> synsets = new ArrayList<>();
 
-    public Graph(String synsetFile) {
-        In in = new In(synsetFile);
-
-        while(in.hasNextLine()){
-            String[] line = in.readLine().split(",");
+    public Graph(String synsetFile, String hyponymsFile) {
+        // Get Synsets
+        In inSynset = new In(synsetFile);
+        while(inSynset.hasNextLine()){
+            String[] line = inSynset.readLine().split(",");
 
             Integer synsetID = Integer.parseInt(line[0]);
             String synsetWords = line[1];
             synsets.add(new Synset(synsetID, synsetWords));
+        }
+
+        // Form relationship between Synsets
+        In inHyponyms = new In(hyponymsFile);
+        while (inHyponyms.hasNextLine()) {
+            String[] line = inHyponyms.readLine().split(",");
+            Integer parentID = Integer.parseInt(line[0]);
+
+            Synset parent = synsets.get(parentID);
+            for (int i = 1, len = line.length; i < len; i++) {
+                Integer childSynsetID = Integer.parseInt(line[i]);
+                Synset child = synsets.get(childSynsetID);
+                parent.children.add(child);
+            }
         }
     }
 
     public void printSynset() {
         for (Synset x: synsets) {
             System.out.println(x.id + ", " + x.words);
+        }
+    }
+
+    public void printHyponym() {
+        for (Synset x: synsets) {
+            System.out.print(x.id + ": " + x.words + " has children: ");
+            for (Synset child: x.children) {
+                System.out.print("" + child.words);
+            }
+            System.out.println();
         }
     }
 }

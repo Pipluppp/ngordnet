@@ -62,4 +62,37 @@ public class TestGraph {
         String expected = "[Arianism, Aristotelianism, Athanasian_Creed, Athanasianism, Augsburg_Confession, Behmenism, Boehmenism, British_empiricism, Byzantinism, Cabalism, Caesaropapism, Christology, Comtism, Confucianism, Daoism, Docetism, Episcopalianism, Erastianism, Girondism, Gnosticism, Golden_Rule, Hinayanism, Immaculate_Conception, Immaculate_Conception_of_the_Virgin_Mary, Incarnation, Jansenism, Kabbalism, Mahayanism, Mandaeanism, Mandeanism, Marcionism, Monophysitism, Monothelitism, Nativity, Neoplatonism, Nestorianism, Nicene_Creed, Pelagianism, Platonism, Quakerism, Rosicrucianism, Scholasticism, Stoicism, Taoism, Thomism, Virgin_Birth, Zurvanism, abolitionism, absolutism, aesthetic, aesthetics, aetiology, ahimsa, amoralism, animalism, animism, antiestablishmentarianism, antiestablishmentism, antinomianism, article_of_faith, asceticism, axiology, bioethics, casuistry, chiliasm, church_doctrine, commandment, conceptualism, confession, consubstantiation, contextualism, contract_law, corporation_law, cosmology, creation_science, creationism, credendum, credo, creed, deconstruction, deconstructionism, deism, democracy, descriptivism, determinism, dialectic, dialectical_materialism, divine_right, divine_right_of_kings, doctrine, dogma, dualism, dynamism, ecumenicalism, ecumenicism, ecumenism, egalitarianism, election, empiricism, empiricist_philosophy, endaemonism, environmentalism, epicureanism, epistemology, equalitarianism, establishmentarianism, establishmentism, esthetic, esthetics, ethicism, ethics, etiology, eudemonism, existential_philosophy, existentialism, existentialist_philosophy, expansionism, experimentalism, fatalism, feminism, foreordination, formalism, free_thought, freethinking, functionalism, gospel, gymnosophy, hedonism, hereditarianism, humanism, humanitarianism, idealism, imitation, individualism, instrumentalism, internationalism, intuitionism, irredentism, irridentism, ism, jurisprudence, laissez_faire, law, legal_philosophy, literalism, logic, logical_positivism, logicism, majority_rule, materialism, matrimonial_law, mechanism, mentalism, metaphysics, methodological_analysis, methodology, millenarianism, millenarism, millennium, millenniumism, mimesis, mitsvah, mitzvah, modal_logic, monism, moral_philosophy, multiculturalism, naive_realism, nationalism, nativism, naturalism, neuroethics, nihilism, nominalism, nuclear_deterrence, nullification, one-way_street, ontology, operationalism, original_sin, pacificism, pacifism, passivism, patent_law, peripateticism, phenomenology, philosophical_doctrine, philosophical_system, philosophical_theory, philosophy, physicalism, pluralism, populism, positivism, pragmatism, precept, predestination, predetermination, preordination, prescriptivism, presentism, probabilism, rationalism, real_presence, realism, reformism, reincarnation, reincarnationism, relativism, religious_doctrine, school_of_thought, secessionism, secular_humanism, secularism, semiology, semiotics, sensationalism, sensualism, solipsism, spiritualism, states'_rights, subjectivism, synergism, teaching, teleology, tenet, testament, theanthropism, theological_doctrine, total_depravity, traditionalism, transcendental_philosophy, transcendentalism, transubstantiation, unilateralism, universalism, utilitarianism, vitalism]";
         assertThat(actual.equals(expected)).isTrue();
     }
+
+    @Test
+    public void testMultiWordHyponymsSmall1() {
+        Graph dag = new Graph(BIG_SYNSET_FILE, BIG_HYPONYM_FILE);
+        String[] inputWords = {"video", "recording"};
+
+        HashSet<String> hyponyms = dag.hyponyms(inputWords);
+        String actual = dag.sortHyponyms(hyponyms).toString();
+        String expected = "[video, video_recording, videocassette, videotape]";
+        assertThat(actual.equals(expected)).isTrue();
+    }
+
+    @Test
+    public void testMultiWordHyponymsSmall2() {
+        Graph dag = new Graph(BIG_SYNSET_FILE, BIG_HYPONYM_FILE);
+        String[] inputWords = {"pastry", "tart"};
+
+        HashSet<String> hyponyms = dag.hyponyms(inputWords);
+        String actual = dag.sortHyponyms(hyponyms).toString();
+        String expected = "[apple_tart, lobster_tart, quiche, quiche_Lorraine, tart, tartlet]";
+        assertThat(actual.equals(expected)).isTrue();
+    }
+
+    @Test
+    public void testMultiWordHyponymsBig() {
+        Graph dag = new Graph(BIG_SYNSET_FILE, BIG_HYPONYM_FILE);
+        String[] inputWords = {"drug", "medicine", "remedy"};
+
+        HashSet<String> hyponyms = dag.hyponyms(inputWords);
+        String actual = dag.sortHyponyms(hyponyms).toString();
+        String expected = "[acoustic, alleviant, alleviator, antidote, application, arnica, atropine, baby_oil, balm, balsam, belladonna, black_lotion, blackwash, calamine_lotion, camphor_ice, carron_oil, catholicon, cerate, chrism, chrisom, collyrium, counterpoison, curative, cure, cure-all, dry_mustard, elixir, elixir_of_life, embrocation, emetic, eye-lotion, eyewash, holy_oil, ipecac, lenitive, liniment, lip_balm, lotion, magic_bullet, menthol, mentholated_salve, mercurial_ointment, nauseant, nostrum, obidoxime_chloride, ointment, palliative, panacea, powdered_mustard, preventative, preventive, prophylactic, remedy, rubbing_alcohol, sacramental_oil, salve, therapeutic, unction, unguent, vomit, vomitive, witch_hazel, wych_hazel, zinc_ointment]";
+        assertThat(actual.equals(expected)).isTrue();
+    }
 }

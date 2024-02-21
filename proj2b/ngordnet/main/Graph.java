@@ -81,6 +81,15 @@ public class Graph {
         return setOfHyponyms;
     }
 
+    public HashSet<String> hyponyms(String[] words) {
+        HashSet<String> hyponymsIntersection = hyponyms(words[0]);
+        for (String word: words) {
+            hyponymsIntersection.retainAll(hyponyms(word));
+        }
+
+        return hyponymsIntersection;
+    }
+
     public List<String> sortHyponyms(HashSet<String> hyponyms) {
         List<String> sorted = new ArrayList<>(hyponyms);
         Collections.sort(sorted);

@@ -12,13 +12,12 @@ public class Main {
         String synsetFile = "./data/wordnet/synsets.txt";
         String hyponymFile = "./data/wordnet/hyponyms.txt";
 
-        Graph graph = new Graph(synsetFile, hyponymFile);
         NGramMap ngram = new NGramMap(wordFile, countFile);
-        // NGramMap ngm = new NGramMap(wordFile, countFile);
+        WordNet net = new WordNet(synsetFile, hyponymFile);
 
         hns.startUp();
         hns.register("history", new HistoryHandler(ngram));
         hns.register("historytext", new HistoryTextHandler(ngram));
-        hns.register("hyponyms", new HyponymsHandler(graph, ngram));
+        hns.register("hyponyms", new HyponymsHandler(net, ngram));
     }
 }

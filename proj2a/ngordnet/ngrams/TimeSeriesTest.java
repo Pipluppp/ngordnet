@@ -149,4 +149,15 @@ public class TimeSeriesTest {
             assertThat(familyBirthdays.data().get(i)).isWithin(1E-10).of(expectedData.get(i));
         }
     }
+
+    @Test
+    public void testSumAll() {
+        TimeSeries ts = new TimeSeries();
+        ts.put(1997, 2.0);
+        ts.put(1995, 1.0);
+        ts.put(2003, 3.0);
+        ts.put(1987, 4.0);
+
+        assertThat(ts.sumAll().equals(10.0)).isTrue();
+    }
 } 

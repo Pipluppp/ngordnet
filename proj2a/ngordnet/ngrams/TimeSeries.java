@@ -127,6 +127,17 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         return resultQuotient;
     }
 
+    // For project2b to sum all values of the timeseries
+    public Double sumAll() {
+        Double sum = 0.0;
+
+        for (Double value: this.values()) {
+            sum += value;
+        }
+
+        return sum;
+    }
+
     // TODO: Add any private helper methods.
     // TODO: Remove all TODO comments before submitting.
 }

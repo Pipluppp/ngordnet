@@ -90,7 +90,7 @@ public class Graph {
         return hyponymsIntersection;
     }
 
-    public List<String> sortHyponyms(HashSet<String> hyponyms) {
+    public List<String> sortHyponyms(Set<String> hyponyms) {
         List<String> sorted = new ArrayList<>(hyponyms);
         Collections.sort(sorted);
         return sorted;

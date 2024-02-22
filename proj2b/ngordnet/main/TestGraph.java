@@ -4,10 +4,7 @@ import ngordnet.ngrams.NGramMap;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -109,6 +106,45 @@ public class TestGraph {
         HashSet<String> hyponyms = dag.getHyponyms(inputWords);
         String actual = dag.sortHyponyms(hyponyms).toString();
         String expected = "[acoustic, alleviant, alleviator, antidote, application, arnica, atropine, baby_oil, balm, balsam, belladonna, black_lotion, blackwash, calamine_lotion, camphor_ice, carron_oil, catholicon, cerate, chrism, chrisom, collyrium, counterpoison, curative, cure, cure-all, dry_mustard, elixir, elixir_of_life, embrocation, emetic, eye-lotion, eyewash, holy_oil, ipecac, lenitive, liniment, lip_balm, lotion, magic_bullet, menthol, mentholated_salve, mercurial_ointment, nauseant, nostrum, obidoxime_chloride, ointment, palliative, panacea, powdered_mustard, preventative, preventive, prophylactic, remedy, rubbing_alcohol, sacramental_oil, salve, therapeutic, unction, unguent, vomit, vomitive, witch_hazel, wych_hazel, zinc_ointment]";
+        assertThat(actual.equals(expected)).isTrue();
+    }
+
+    @Test
+    public void testHyponymsWithNGrams1() {
+        NGramMap ngm = new NGramMap(WORD_FILE, TOTAL_COUNTS_FILE);
+        WordNet net = new WordNet(BIG_SYNSET_FILE, BIG_HYPONYM_FILE);
+
+        // Setup input
+        List<String> inputWords = new ArrayList<>();
+        inputWords.add("philosophy");
+        inputWords.add("belief");
+        Integer startYear = 1950;
+        Integer endYear = 2020;
+        Integer k = 50;
+
+        List<String> setOfHyponyms = net.getHyponymsNGrams(inputWords, startYear, endYear, k, ngm);
+        String actual = setOfHyponyms.toString();
+        String expected = "[aesthetic, commandment, confession, democracy, doctrine, election, feminism, gospel, idealism, imitation, individualism, materialism, mechanism, millennium, nationalism, phenomenology, philosophy, pluralism, realism, teaching]";
+        assertThat(actual.equals(expected)).isTrue();
+    }
+
+    @Test
+    public void testHyponymsWithNGrams2() {
+        NGramMap ngm = new NGramMap(WORD_FILE, TOTAL_COUNTS_FILE);
+        WordNet net = new WordNet(BIG_SYNSET_FILE, BIG_HYPONYM_FILE);
+
+        // Setup input
+        List<String> inputWords = new ArrayList<>();
+        inputWords.add("thought");
+        inputWords.add("belief");
+        inputWords.add("idea");
+        Integer startYear = 1950;
+        Integer endYear = 2020;
+        Integer k = 20;
+
+        List<String> setOfHyponyms = net.getHyponymsNGrams(inputWords, startYear, endYear, k, ngm);
+        String actual = setOfHyponyms.toString();
+        String expected = "[belief, bosom, conclusion, control, effect, feeling, heart, idea, impression, intuition, mind, notion, opinion, possibility, presence, suspicion, theory, thought]";
         assertThat(actual.equals(expected)).isTrue();
     }
 }

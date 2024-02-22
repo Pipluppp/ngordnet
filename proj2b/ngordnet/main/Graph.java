@@ -63,7 +63,7 @@ public class Graph {
     }
 
     // Given a word, find its hyponyms (sorted)
-    public HashSet<String> hyponyms(String word) {
+    public HashSet<String> getHyponyms(String word) {
         HashSet<Synset> synsetsToTraverse = new HashSet<>();
         HashSet<String> setOfHyponyms = new HashSet<>();
 
@@ -81,10 +81,10 @@ public class Graph {
         return setOfHyponyms;
     }
 
-    public HashSet<String> hyponyms(String[] words) {
-        HashSet<String> hyponymsIntersection = hyponyms(words[0]);
+    public HashSet<String> getHyponyms(List<String> words) {
+        HashSet<String> hyponymsIntersection = getHyponyms(words.get(0));
         for (String word: words) {
-            hyponymsIntersection.retainAll(hyponyms(word));
+            hyponymsIntersection.retainAll(getHyponyms(word));
         }
 
         return hyponymsIntersection;

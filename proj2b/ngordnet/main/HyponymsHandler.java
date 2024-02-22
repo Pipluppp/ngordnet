@@ -23,12 +23,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         HashSet<String> setOfHyponyms;
 
         // Find set of hyponyms
-        if (words.size() == 1) {
-            setOfHyponyms = dag.hyponyms(words.get(0));
-        } else {
-            String[] arrayWords = words.toArray(new String[0]);
-            setOfHyponyms = dag.hyponyms(arrayWords);
-        }
+        setOfHyponyms = dag.getHyponyms(words);
 
         // If k != 0
         Map<String, Double> hyponymFrequency = new TreeMap<>();

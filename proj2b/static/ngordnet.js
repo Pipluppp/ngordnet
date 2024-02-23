@@ -100,27 +100,27 @@ $(function() {
     }
 
     function hypohistButton() {
-    console.log("hypohist call");
-    $("#plot").hide();
-    $("#textresult").show();
+        $("#textresult").hide();
+        $("#plot").show();
 
-    var params = get_params();
-    console.log(params);
-    $.get({
-        async: false,
-        url: hypohist_server,
-        data: params,
-        success: function(data) {
-            console.log(data)
+        var params = get_params();
+        console.log(params);
+        $.get({
+            async: false,
+            url: hypohist_server,
+            data: params,
+            success: function(data) {
+            	console.log(data)
 
-            textresult.value = data;
+                plot.src = 'data:image/png;base64,' + data;
 
-        },
-        error: function(data) {
-            console.log("error")
-            console.log(data);
-        },
-        dataType: 'json'
+            },
+            error: function(data) {
+            	console.log("error")
+            	console.log(data);
+            	plot.src = 'data:image/png;base64,' + data;
+            },
+            dataType: 'json'
         });
     }
 });
